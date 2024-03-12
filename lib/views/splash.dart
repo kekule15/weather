@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:weather/style/appColors.dart';
-import 'package:weather/utils/images.dart';
 import 'package:weather/utils/router.dart';
 import 'package:weather/utils/svgs.dart';
 import 'package:weather/widgets/image_widgets.dart';

@@ -1,10 +1,8 @@
-
 import 'dart:math';
 import 'package:intl/intl.dart';
+import 'package:weather/utils/svgs.dart';
 
 class AppHelpers {
-
-
   static String greetingMessage() {
     final timeNow = DateTime.now().hour;
 
@@ -19,7 +17,6 @@ class AppHelpers {
     }
   }
 
-  
   // E.G 8:54 PM
   static String convertDateTimeDisplay(String date) {
     final DateFormat displayFormater = DateFormat('yyyy-MM-dd HH:mm:ss.SSS');
@@ -28,12 +25,11 @@ class AppHelpers {
     final String formatted = serverFormater.format(displayDate);
     return formatted;
   }
-   
 
   // E.G 16-OCT-23
   static String convertNamedDateDisplay(String date) {
     final DateFormat displayFormater = DateFormat('yyyy-MM-dd HH:mm:ss.SSS');
-    final DateFormat serverFormater = DateFormat('dd-MMM-yy');
+    final DateFormat serverFormater = DateFormat('E, MMM d');
     final DateTime displayDate = displayFormater.parse(date);
     final String formatted = serverFormater.format(displayDate);
     return formatted;
@@ -48,5 +44,24 @@ class AppHelpers {
     }
   }
 
+  static String getWeatherImage({required int? group}) {
+    String numberString = group.toString();
+    if (numberString.startsWith('5')) {
+      return rainIconSVG;
+    }
+    if (numberString.startsWith('8')) {
+      return cloudyIconSVG;
+    }
+    if (numberString.startsWith('3')) {
+      return drizzleRainIcon;
+    }
+    if (numberString.startsWith('2')) {
+      return stormIconSVG;
+    }
+    if (numberString.startsWith('6')) {
+      return snowIconSVG;
+    }
 
+    return sunIconSVG;
+  }
 }

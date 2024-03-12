@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:weather/model/city_data_model.dart';
 import 'package:weather/model/weather_response_model.dart';
 import 'package:weather/providers/weather_data_provider.dart';
-import 'package:weather/repository/weather_base_repo.dart';
 import 'package:weather/repository/weather_repository.dart';
 import 'package:weather/utils/logger.dart';
 import 'package:weather/utils/notify_me.dart';
@@ -23,6 +21,7 @@ class WeatherDataViewModel extends BaseViewModel {
   WeatherDataViewModel(this.ref) : super(ref) {
     _weatherRepository = ref.read(weatherRepositoryProvider);
     pullAllStoredCityList();
+    getCityWeatherData(city: selectedCity.name);
   }
 
   var hiveKeyId = "weather";
@@ -135,6 +134,7 @@ class WeatherDataViewModel extends BaseViewModel {
   }
 
   bool isLoadingWeather = false;
+  List<ListElement>? list = [];
   Future getCityWeatherData({
     required String city,
   }) async {
@@ -143,8 +143,10 @@ class WeatherDataViewModel extends BaseViewModel {
     final res = await _weatherRepository?.getCityWeatherData(
         city: city, units: "metric", appId: Secrets.wAPIKEY);
     if (res != null) {
+      list = [];
       AppLogger.logg("response $res");
       isLoadingWeather = false;
+      list = res.list;
       notifyListeners();
     } else {
       NotifyMe.showAlert("error");

@@ -132,7 +132,7 @@ class HomeView extends ConsumerWidget {
               SizedBox(
                 height: 20.h,
               ),
-              CityCardWidget(),
+            const  CityCardWidget(),
               SizedBox(
                 height: 20.h,
               ),

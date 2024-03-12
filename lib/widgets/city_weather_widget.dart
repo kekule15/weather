@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:weather/model/city_data_model.dart';
 import 'package:weather/providers/weather_data_provider.dart';
 import 'package:weather/style/appColors.dart';
-import 'package:weather/utils/constvalues.dart';
 import 'package:weather/widgets/menu_bar_widget.dart';
 import 'package:weather/widgets/single_text_line_widget.dart';
 

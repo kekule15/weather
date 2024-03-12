@@ -123,7 +123,7 @@ class WordsButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return RichText(
       textAlign: textAlign ?? TextAlign.start,
-      textScaleFactor: MediaQuery.of(context).textScaleFactor,
+      //textScaleFactor: MediaQuery.of(context).textScaleFactor,
       text: TextSpan(
         text: firstText,
         style: Theme.of(context).primaryTextTheme.headlineMedium?.copyWith(
