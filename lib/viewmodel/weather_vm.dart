@@ -68,7 +68,7 @@ class WeatherDataViewModel extends BaseViewModel {
       isfetchLocalData = false;
       notifyListeners();
     }
-    fallBackToDefault();
+
     AppLogger.logg("Local data $storedCityList");
   }
 
@@ -98,29 +98,29 @@ class WeatherDataViewModel extends BaseViewModel {
   void removeCityFromStoredList(
       {required String name, required VoidCallback next}) async {
     var box = await Hive.openBox('app');
-
-    final serviceBox = ValueNotifier(box.listenable(keys: [hiveKeyId]));
-
-    List<dynamic> daaaa = serviceBox.value.value.get(hiveKeyId) ?? [];
-    final list = List<CityDataModel>.from(daaaa.map((x) => (x)));
-
     // list.remove(item);
-    list.removeWhere((element) => name == element.name);
-    notifyListeners();
+    if (name == "Lagos") {
+      if (storedCityList.length == 1) {
+        storedCityList.removeWhere((element) => name == element.name);
+        notifyListeners();
+        AppLogger.logg("remove lagos");
+      }
+    } else {
+      storedCityList.removeWhere((element) => name == element.name);
+      notifyListeners();
+    }
 
-    //AppLogger.logg("count ${list.length}");
-
-    await box.put(hiveKeyId, list);
+    await box.put(hiveKeyId, storedCityList);
     await pullAllStoredCityList();
+    //
+    fallBackToDefault(name: name);
   }
 
-  void fallBackToDefault() {
-    if (selectedCity.name == "Lagos") {
-      //already in Lagos
-    } else {
+  void fallBackToDefault({required String name}) {
+    if (selectedCity.name == name) {
       selectedCity =
           storedCityList.firstWhere((element) => element.name == "Lagos");
       notifyListeners();
-    }
+    } else {}
   }
 }

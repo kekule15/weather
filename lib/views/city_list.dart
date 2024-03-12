@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:weather/model/city_data_model.dart';
 import 'package:weather/providers/weather_data_provider.dart';
 import 'package:weather/style/appColors.dart';
+import 'package:weather/utils/notify_me.dart';
 import 'package:weather/widgets/customfield.dart';
 import 'package:weather/widgets/single_text_line_widget.dart';
 
@@ -24,26 +25,34 @@ class _CityListViewState extends ConsumerState<CityListView> {
 
     var cityDataList = viewmodel.cityDataList;
 
-    // THE CUSTOME WIDGET THAT DISPLAYS LIST OF PRODUCT EITHER FROM THE SEARCHED DATA OR FROM THE MAIN DATA SOUTCE
+    // THE CUSTOME WIDGET THAT DISPLAYS LIST OF CITIES EITHER FROM THE SEARCHED DATA OR FROM THE MAIN DATA SOUTCE
     Widget businessTypeListWidget(int index, List<CityDataModel> myList) {
       var value = myList[index];
       return Padding(
         padding: EdgeInsets.only(bottom: 10.h),
         child: InkWell(
           onTap: () {
-            viewmodel.addCityToList(
-                item: value,
-                next: () {
-                  context.pop();
-                });
+            if (viewmodel.storedCityList
+                .any((element) => element.name.contains(value.name))) {
+              NotifyMe.showAlert("City already added");
+            } else {
+              viewmodel.addCityToList(
+                  item: value,
+                  next: () {
+                    context.pop();
+                  });
+            }
           },
           child: Container(
             width: double.infinity,
             padding: EdgeInsets.all(15.sp),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(6.r),
-              color: AppColors.gray.withOpacity(0.4),
-            ),
+                borderRadius: BorderRadius.circular(6.r),
+                color: switch (viewmodel.storedCityList
+                    .any((element) => element.name.contains(value.name))) {
+                  true => AppColors.lightBlueTheme.withOpacity(0.3),
+                  false => AppColors.gray.withOpacity(0.4),
+                }),
             child: SingleTextLineWidget(
               text: value.name.toString(),
               size: 14.sp,
@@ -77,7 +86,8 @@ class _CityListViewState extends ConsumerState<CityListView> {
       height: 400.h,
       width: MediaQuery.sizeOf(context).width,
       // padding: EdgeInsets.all(15.sp),
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10.r)),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20.r), color: AppColors.white),
       child: Padding(
         padding: const EdgeInsets.all(15.0),
         child: ListView(

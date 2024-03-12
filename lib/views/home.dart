@@ -61,11 +61,12 @@ class HomeView extends ConsumerWidget {
                       InkWell(
                         onTap: () {
                           showModalBottomSheet(
+                            backgroundColor: AppColors.white,
                             context: context,
-                            isDismissible: false,
-                            showDragHandle: true,
+                            isDismissible: true,
+                            showDragHandle: false,
                             isScrollControlled: true,
-                            enableDrag: true,
+                            enableDrag: false,
                             builder: (BuildContext context) {
                               return const CityListView();
                             },
@@ -116,9 +117,7 @@ class HomeView extends ConsumerWidget {
                               onTap: () {
                                 viewmodel.selectCity(city: data);
                               },
-                              remove: () {
-                               
-                              },
+                              remove: () {},
                               data: data,
                               selected:
                                   viewmodel.selectedCity.name == data.name,
