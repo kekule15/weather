@@ -40,12 +40,9 @@ class _CityListViewState extends ConsumerState<CityListView> {
             width: double.infinity,
             padding: EdgeInsets.all(15.sp),
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(6.r),
-                color: switch (viewmodel.storedCityList
-                    .any((element) => element.name.contains(value.name))) {
-                  true => AppColors.lightBlueTheme.withOpacity(0.3),
-                  false => AppColors.gray.withOpacity(0.4),
-                }),
+              borderRadius: BorderRadius.circular(6.r),
+              color: Theme.of(context).cardTheme.color,
+            ),
             child: SingleTextLineWidget(
               text: value.name.toString(),
               size: 14.sp,
@@ -117,7 +114,9 @@ class _CityListViewState extends ConsumerState<CityListView> {
       width: MediaQuery.sizeOf(context).width,
       // padding: EdgeInsets.all(15.sp),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20.r), color: AppColors.white),
+        borderRadius: BorderRadius.circular(16.r),
+        color: Theme.of(context).cardColor,
+      ),
       child: Padding(
         padding: const EdgeInsets.all(15.0),
         child: ListView(
@@ -129,6 +128,7 @@ class _CityListViewState extends ConsumerState<CityListView> {
               child: CustomField(
                 headtext: "Search city name",
                 controller: searchTextController,
+                //fillColor: Theme.of(context).cardColor,
                 pIcon: Icon(
                   Icons.search,
                   size: 13.w,

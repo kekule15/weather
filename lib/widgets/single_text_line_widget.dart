@@ -29,8 +29,7 @@ class SingleTextLineWidget extends ConsumerWidget {
               Theme.of(context)
                   .primaryTextTheme
                   .headlineMedium!
-                  .color!
-                  .withOpacity(0.7)),
+                  .color!),
     );
   }
 }

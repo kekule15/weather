@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:weather/model/city_data_model.dart';
+import 'package:weather/providers/theme_provider.dart';
 import 'package:weather/providers/weather_data_provider.dart';
 import 'package:weather/style/appColors.dart';
 import 'package:weather/widgets/menu_bar_widget.dart';
@@ -20,6 +21,7 @@ class CityWeatherWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     var viewmodel = ref.watch(weatherDataProvider);
+    final themeDataMode = ref.watch(themeDataProvider);
     final List caseDetailsOptions = [
       "Remove City",
     ];
@@ -39,9 +41,14 @@ class CityWeatherWidget extends ConsumerWidget {
             children: [
               SingleTextLineWidget(
                 text: data.name,
-                size: 15.sp,
+                size: 14.sp,
                 weight: FontWeight.w600,
-                color: selected ? AppColors.white : AppColors.black,
+                color: selected
+                    ? AppColors.white
+                    : switch (themeDataMode.isdarkTheme!) {
+                        true => AppColors.white,
+                        false => AppColors.black,
+                      },
               ),
               SizedBox(
                 width: 20.w,
@@ -50,13 +57,18 @@ class CityWeatherWidget extends ConsumerWidget {
                   icon: Icon(
                     Icons.more_vert,
                     size: 15.w,
-                    color: selected ? AppColors.white : AppColors.black,
+                    color: selected
+                        ? AppColors.white
+                        : switch (themeDataMode.isdarkTheme!) {
+                            true => AppColors.white,
+                            false => AppColors.black,
+                          },
                   ),
                   onSelected: (value) {
                     switch (value) {
                       case "Remove City":
                         viewmodel.removeCityFromStoredList(
-                              name: data.name, next: () {});
+                            name: data.name, next: () {});
                     }
                   },
                   item: List.generate(

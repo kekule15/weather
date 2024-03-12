@@ -5,6 +5,7 @@ import 'package:weather/providers/weather_data_provider.dart';
 import 'package:weather/style/appColors.dart';
 import 'package:weather/utils/constvalues.dart';
 import 'package:weather/views/city_list.dart';
+import 'package:weather/views/drawer.dart';
 import 'package:weather/widgets/city_card_widget.dart';
 import 'package:weather/widgets/city_weather_widget.dart';
 import 'package:weather/widgets/shimmer_widget.dart';
@@ -16,8 +17,16 @@ class HomeView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final _scaffoldKey = GlobalKey<ScaffoldState>();
+
+    void openMyDrawer() {
+      _scaffoldKey.currentState!.openDrawer();
+    }
+
     var viewmodel = ref.watch(weatherDataProvider);
     return Scaffold(
+      key: _scaffoldKey,
+      drawer: const MyDrawerPage(),
       body: Stack(
         children: [
           Column(
@@ -33,7 +42,9 @@ class HomeView extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        openMyDrawer();
+                      },
                       child: Icon(
                         Icons.menu,
                         size: 20.w,
@@ -67,7 +78,7 @@ class HomeView extends ConsumerWidget {
                       InkWell(
                         onTap: () {
                           showModalBottomSheet(
-                            backgroundColor: AppColors.white,
+                            backgroundColor: Theme.of(context).dialogBackgroundColor,
                             context: context,
                             isDismissible: true,
                             showDragHandle: false,

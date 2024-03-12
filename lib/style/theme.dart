@@ -73,7 +73,7 @@ class ThemeProvider extends ChangeNotifier {
         const DrawerThemeData(backgroundColor: AppColors.termsTextColor),
     scaffoldBackgroundColor: AppColors.black,
     // popupMenuTheme: PopupMenuThemeData(
-    //   color: 
+    //   color:
     // ),
     scrollbarTheme: ScrollbarThemeData(
       interactive: true,
@@ -100,8 +100,12 @@ class ThemeProvider extends ChangeNotifier {
         borderSide: const BorderSide(color: AppColors.dropDownBorderColor),
         borderRadius: BorderRadius.circular(8.0),
       ),
+      border: OutlineInputBorder(
+        borderSide: const BorderSide(color: AppColors.dropDownBorderColor),
+        borderRadius: BorderRadius.circular(8.0),
+      ),
       focusedBorder: OutlineInputBorder(
-        borderSide: const BorderSide(color: AppColors.primary),
+        borderSide: const BorderSide(color: AppColors.dropDownBorderColor),
         borderRadius: BorderRadius.circular(8.0),
       ),
       contentPadding: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
@@ -231,7 +235,7 @@ class ThemeProvider extends ChangeNotifier {
       ),
       primaryColor: AppColors.primary,
       cardTheme: CardTheme(
-          color: AppColors.white,
+          color: AppColors.gray.withOpacity(0.7),
           elevation: 0,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(1))),
@@ -276,6 +280,10 @@ class ThemeProvider extends ChangeNotifier {
           borderRadius: BorderRadius.circular(8.0),
         ),
         focusedBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: AppColors.termsTextColor),
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        border: OutlineInputBorder(
           borderSide: const BorderSide(color: AppColors.termsTextColor),
           borderRadius: BorderRadius.circular(8.0),
         ),

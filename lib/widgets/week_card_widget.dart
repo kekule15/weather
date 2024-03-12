@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:weather/providers/theme_provider.dart';
 import 'package:weather/style/appColors.dart';
 import 'package:weather/utils/app_helpers.dart';
 import 'package:weather/widgets/image_widgets.dart';
@@ -23,6 +24,7 @@ class WeekCardWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final themeDataMode = ref.watch(themeDataProvider);
     var datt = DateTime.fromMillisecondsSinceEpoch(date! * 1000);
     final DateFormat serverFormater = DateFormat('E, MMM d');
     return Container(
@@ -48,6 +50,10 @@ class WeekCardWidget extends ConsumerWidget {
               asset: AppHelpers.getWeatherImage(group: group),
               width: 30.w,
               height: 30.w,
+              color: switch (themeDataMode.isdarkTheme!) {
+                true => AppColors.white,
+                false => null
+              },
             ),
             Container(
               decoration: BoxDecoration(
