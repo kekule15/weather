@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:weather/style/appColors.dart';
@@ -38,5 +39,61 @@ class ImageShimmerWidget extends StatelessWidget {
             color: AppColors.white, borderRadius: BorderRadius.circular(10)),
       ),
     );
+  }
+}
+
+class WeekCardShimmerWidget extends StatelessWidget {
+  const WeekCardShimmerWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 80.h,
+      width: MediaQuery.sizeOf(context).width,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10.r),
+          color: AppColors.gray.withOpacity(0.3)),
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            ImageShimmerWidget(
+              width: 30.w,
+              height: 10.h,
+            ),
+            ImageShimmerWidget(
+              width: 30.w,
+              height: 30.w,
+            ),
+            ImageShimmerWidget(
+              width: 50.w,
+              height: 20.h,
+            ),
+            ImageShimmerWidget(
+              width: 70.w,
+              height: 20.h,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class LoadWeekShimmer extends ConsumerWidget {
+  const LoadWeekShimmer({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return ListView.builder(
+        itemCount: 3,
+        padding: EdgeInsets.zero,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: EdgeInsets.only(bottom: 15.h),
+            child: WeekCardShimmerWidget(),
+          );
+        });
   }
 }

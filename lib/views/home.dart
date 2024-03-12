@@ -11,6 +11,7 @@ import 'package:weather/views/city_list.dart';
 import 'package:weather/widgets/city_card_widget.dart';
 import 'package:weather/widgets/city_weather_widget.dart';
 import 'package:weather/widgets/image_widgets.dart';
+import 'package:weather/widgets/shimmer_widget.dart';
 import 'package:weather/widgets/single_text_line_widget.dart';
 import 'package:weather/widgets/week_card_widget.dart';
 
@@ -154,7 +155,14 @@ class HomeView extends ConsumerWidget {
             ],
           ),
           switch (viewmodel.isLoadingWeather) {
-            true => SizedBox(),
+            true => Padding(
+                              padding: EdgeInsets.only(
+                    top: 350.h,
+                    left: generalHorizontalPadding,
+                    right: generalHorizontalPadding),
+
+              child: const LoadWeekShimmer(),
+            ),
             false => Padding(
                 padding: EdgeInsets.only(
                     top: 350.h,
