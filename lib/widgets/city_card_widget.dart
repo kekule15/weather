@@ -15,7 +15,7 @@ class CityCardWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     var viewmodel = ref.watch(weatherDataProvider);
-    var cityData = viewmodel.list?[0];
+    var cityData = viewmodel.list?.first;
 
    
     return Container(

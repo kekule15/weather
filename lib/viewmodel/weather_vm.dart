@@ -9,7 +9,6 @@ import 'package:weather/utils/logger.dart';
 import 'package:weather/utils/notify_me.dart';
 import 'package:weather/utils/secrets.dart';
 import 'package:weather/viewmodel/base_vm.dart';
-//import 'package:get_storage/get_storage.dart';
 
 class WeatherDataViewModel extends BaseViewModel {
   @override
@@ -107,12 +106,11 @@ class WeatherDataViewModel extends BaseViewModel {
   void removeCityFromStoredList(
       {required String name, required VoidCallback next}) async {
     var box = await Hive.openBox('app');
-    // list.remove(item);
     if (name == "Lagos") {
       if (storedCityList.length == 1) {
-        storedCityList.removeWhere((element) => name == element.name);
-        notifyListeners();
-        AppLogger.logg("remove lagos");
+        // storedCityList.removeWhere((element) => name == element.name);
+        // notifyListeners();
+        // AppLogger.logg("remove lagos");
       }
     } else {
       storedCityList.removeWhere((element) => name == element.name);
@@ -130,6 +128,7 @@ class WeatherDataViewModel extends BaseViewModel {
       selectedCity =
           storedCityList.firstWhere((element) => element.name == "Lagos");
       notifyListeners();
+      getCityWeatherData(city: "Lagos");
     } else {}
   }
 

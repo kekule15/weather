@@ -18,6 +18,16 @@ class AppHelpers {
   }
 
   // E.G 8:54 PM
+  static String convertTimestampToDateTime(int? timestamp) {
+    DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(timestamp!);
+   // final DateFormat displayFormater = DateFormat('yyyy-MM-dd HH:mm:ss.SSS');
+    final DateFormat serverFormater = DateFormat('E, MMM d');
+    // final DateTime displayDate = displayFormater.parse(date);
+    final String formatted = serverFormater.format(dateTime);
+    return formatted;
+  }
+
+  // E.G 8:54 PM
   static String convertDateTimeDisplay(String date) {
     final DateFormat displayFormater = DateFormat('yyyy-MM-dd HH:mm:ss.SSS');
     final DateFormat serverFormater = DateFormat('h:mm: a');
