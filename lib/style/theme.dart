@@ -72,6 +72,9 @@ class ThemeProvider extends ChangeNotifier {
     drawerTheme:
         const DrawerThemeData(backgroundColor: AppColors.termsTextColor),
     scaffoldBackgroundColor: AppColors.black,
+    // popupMenuTheme: PopupMenuThemeData(
+    //   color: 
+    // ),
     scrollbarTheme: ScrollbarThemeData(
       interactive: true,
       // thumbVisibility: true,

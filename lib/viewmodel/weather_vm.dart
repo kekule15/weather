@@ -13,7 +13,7 @@ class WeatherDataViewModel extends BaseViewModel {
   final Ref ref;
 
   WeatherDataViewModel(this.ref) : super(ref) {
-    //pullAndPushCityList();
+    pullAllStoredCityList();
   }
 
   var hiveKeyId = "weather";
@@ -48,26 +48,21 @@ class WeatherDataViewModel extends BaseViewModel {
 
   bool isfetchLocalData = false;
 
-  Future<void> pullAndPushCityList() async {
+  Future<void> pullAllStoredCityList() async {
     var box = await Hive.openBox('app');
     //storedCityList = [];
     isfetchLocalData = true;
     notifyListeners();
 
-    final shopItemBox = ValueNotifier(box.listenable(keys: [hiveKeyId]));
+    final serviceBox = ValueNotifier(box.listenable(keys: [hiveKeyId]));
 
     List<dynamic> cityDataFromStorage =
-        shopItemBox.value.value.get(hiveKeyId) ?? [];
+        serviceBox.value.value.get(hiveKeyId) ?? [];
 
     if (cityDataFromStorage.isEmpty) {
-      var newData = cityDataList;
-      await box.put(hiveKeyId, newData);
-      storedCityList = newData;
-      isfetchLocalData = false;
-      notifyListeners();
     } else {
       storedCityList = [];
-      cityDataFromStorage = shopItemBox.value.value.get(hiveKeyId) ?? [];
+      cityDataFromStorage = serviceBox.value.value.get(hiveKeyId) ?? [];
       storedCityList =
           List<CityDataModel>.from(cityDataFromStorage.map((x) => (x)));
       isfetchLocalData = false;
@@ -79,5 +74,42 @@ class WeatherDataViewModel extends BaseViewModel {
   void selectCity({required CityDataModel city}) {
     selectedCity = city;
     notifyListeners();
+  }
+
+  void addCityToList(
+      {required CityDataModel item, required VoidCallback next}) async {
+    var box = await Hive.openBox('app');
+
+    final serviceBox = ValueNotifier(box.listenable(keys: [hiveKeyId]));
+
+    List<dynamic> daaaa = serviceBox.value.value.get(hiveKeyId) ?? [];
+    final list = List<CityDataModel>.from(daaaa.map((x) => (x)));
+
+    // AppLogger.logg("list is not ${list}");
+    list.add(item);
+    notifyListeners();
+
+    await box.put(hiveKeyId, list);
+    await pullAllStoredCityList();
+    next();
+  }
+
+  void removeCityFromStoredList(
+      {required String name, required VoidCallback next}) async {
+    var box = await Hive.openBox('app');
+
+    final serviceBox = ValueNotifier(box.listenable(keys: [hiveKeyId]));
+
+    List<dynamic> daaaa = serviceBox.value.value.get(hiveKeyId) ?? [];
+    final list = List<CityDataModel>.from(daaaa.map((x) => (x)));
+
+    // list.remove(item);
+    list.removeWhere((element) => name == element.name);
+    notifyListeners();
+
+    //AppLogger.logg("count ${list.length}");
+
+    await box.put(hiveKeyId, list);
+    await pullAllStoredCityList();
   }
 }

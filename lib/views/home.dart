@@ -111,13 +111,17 @@ class HomeView extends ConsumerWidget {
                             (index) {
                           var data = viewmodel.storedCityList[index];
                           return Padding(
-                            padding:  EdgeInsets.only(left: 15.w),
+                            padding: EdgeInsets.only(left: 15.w),
                             child: CityWeatherWidget(
                               onTap: () {
                                 viewmodel.selectCity(city: data);
                               },
+                              remove: () {
+                               
+                              },
                               data: data,
-                              selected: viewmodel.selectedCity.name == data.name,
+                              selected:
+                                  viewmodel.selectedCity.name == data.name,
                             ),
                           );
                         }),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:weather/model/city_data_model.dart';
 import 'package:weather/providers/weather_data_provider.dart';
 import 'package:weather/style/appColors.dart';
@@ -29,7 +30,13 @@ class _CityListViewState extends ConsumerState<CityListView> {
       return Padding(
         padding: EdgeInsets.only(bottom: 10.h),
         child: InkWell(
-          onTap: () {},
+          onTap: () {
+            viewmodel.addCityToList(
+                item: value,
+                next: () {
+                  context.pop();
+                });
+          },
           child: Container(
             width: double.infinity,
             padding: EdgeInsets.all(15.sp),
