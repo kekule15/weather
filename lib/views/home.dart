@@ -3,14 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:weather/providers/weather_data_provider.dart';
 import 'package:weather/style/appColors.dart';
-import 'package:weather/utils/app_helpers.dart';
 import 'package:weather/utils/constvalues.dart';
-import 'package:weather/utils/logger.dart';
-import 'package:weather/utils/svgs.dart';
 import 'package:weather/views/city_list.dart';
 import 'package:weather/widgets/city_card_widget.dart';
 import 'package:weather/widgets/city_weather_widget.dart';
-import 'package:weather/widgets/image_widgets.dart';
 import 'package:weather/widgets/shimmer_widget.dart';
 import 'package:weather/widgets/single_text_line_widget.dart';
 import 'package:weather/widgets/week_card_widget.dart';
@@ -48,9 +44,15 @@ class HomeView extends ConsumerWidget {
                       size: 18.sp,
                       weight: FontWeight.bold,
                     ),
-                    Icon(
-                      Icons.refresh,
-                      size: 20.w,
+                    InkWell(
+                      onTap: () {
+                        viewmodel.getCityWeatherData(
+                            city: viewmodel.selectedCity.name);
+                      },
+                      child: Icon(
+                        Icons.refresh,
+                        size: 20.w,
+                      ),
                     ),
                   ],
                 ),
@@ -121,7 +123,6 @@ class HomeView extends ConsumerWidget {
                               onTap: () {
                                 viewmodel.selectCity(city: data);
                               },
-                              remove: () {},
                               data: data,
                               selected:
                                   viewmodel.selectedCity.name == data.name,
@@ -156,13 +157,12 @@ class HomeView extends ConsumerWidget {
           ),
           switch (viewmodel.isLoadingWeather) {
             true => Padding(
-                              padding: EdgeInsets.only(
+                padding: EdgeInsets.only(
                     top: 350.h,
                     left: generalHorizontalPadding,
                     right: generalHorizontalPadding),
-
-              child: const LoadWeekShimmer(),
-            ),
+                child: const LoadWeekShimmer(),
+              ),
             false => Padding(
                 padding: EdgeInsets.only(
                     top: 350.h,
@@ -173,7 +173,7 @@ class HomeView extends ConsumerWidget {
                     itemCount: viewmodel.list?.length,
                     itemBuilder: (context, index) {
                       var cityData = viewmodel.list?[index];
-                      
+
                       return Padding(
                         padding: EdgeInsets.only(bottom: 15.h),
                         child: WeekCardWidget(

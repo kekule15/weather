@@ -7,6 +7,7 @@ import 'package:weather/providers/weather_data_provider.dart';
 import 'package:weather/style/appColors.dart';
 import 'package:weather/utils/notify_me.dart';
 import 'package:weather/widgets/customfield.dart';
+import 'package:weather/widgets/menu_bar_widget.dart';
 import 'package:weather/widgets/single_text_line_widget.dart';
 
 class CityListView extends ConsumerStatefulWidget {
@@ -27,23 +28,15 @@ class _CityListViewState extends ConsumerState<CityListView> {
 
     // THE CUSTOME WIDGET THAT DISPLAYS LIST OF CITIES EITHER FROM THE SEARCHED DATA OR FROM THE MAIN DATA SOUTCE
     Widget businessTypeListWidget(int index, List<CityDataModel> myList) {
+      final List caseDetailsOptions = [
+        "Add City to Carousel",
+        "View City Weather"
+      ];
       var value = myList[index];
       return Padding(
         padding: EdgeInsets.only(bottom: 10.h),
-        child: InkWell(
-          onTap: () {
-            if (viewmodel.storedCityList
-                .any((element) => element.name.contains(value.name))) {
-              NotifyMe.showAlert("City already added");
-            } else {
-              viewmodel.addCityToList(
-                  item: value,
-                  next: () {
-                    context.pop();
-                  });
-            }
-          },
-          child: Container(
+        child: CustomPopMenuBarWidget(
+          icon: Container(
             width: double.infinity,
             padding: EdgeInsets.all(15.sp),
             decoration: BoxDecoration(
@@ -57,6 +50,43 @@ class _CityListViewState extends ConsumerState<CityListView> {
               text: value.name.toString(),
               size: 14.sp,
               weight: FontWeight.w500,
+            ),
+          ),
+          onSelected: (values) {
+            switch (values) {
+              case "Add City to Carousel":
+                if (viewmodel.storedCityList
+                    .any((element) => element.name.contains(value.name))) {
+                  NotifyMe.showAlert("City already added");
+                } else {
+                  viewmodel.addCityToList(
+                      item: value,
+                      next: () {
+                        context.pop();
+                      });
+                }
+            }
+          },
+          item: List.generate(
+            caseDetailsOptions.length,
+            (index) => PopupMenuItem<String>(
+              value: caseDetailsOptions[index],
+              child: InkWell(
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 20.w,
+                    ),
+                    Text(
+                      caseDetailsOptions[index],
+                      style: Theme.of(context)
+                          .primaryTextTheme
+                          .headlineSmall
+                          ?.copyWith(fontSize: 13.sp),
+                    ),
+                  ],
+                ),
+              ),
             ),
           ),
         ),

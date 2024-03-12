@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:weather/style/appColors.dart';
 import 'package:weather/utils/app_helpers.dart';
-import 'package:weather/utils/svgs.dart';
 import 'package:weather/widgets/image_widgets.dart';
 import 'package:weather/widgets/single_text_line_widget.dart';
 

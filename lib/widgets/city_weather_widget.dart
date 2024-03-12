@@ -11,12 +11,10 @@ class CityWeatherWidget extends ConsumerWidget {
   final CityDataModel data;
   final bool selected;
   final VoidCallback onTap;
-  final VoidCallback remove;
   const CityWeatherWidget(
       {required this.data,
       required this.selected,
       required this.onTap,
-      required this.remove,
       super.key});
 
   @override

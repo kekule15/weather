@@ -92,7 +92,7 @@ class LoadWeekShimmer extends ConsumerWidget {
         itemBuilder: (context, index) {
           return Padding(
             padding: EdgeInsets.only(bottom: 15.h),
-            child: WeekCardShimmerWidget(),
+            child: const WeekCardShimmerWidget(),
           );
         });
   }
