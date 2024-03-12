@@ -10,10 +10,10 @@ import 'package:weather/http/network.dart' as networkutils;
 abstract class ApiManager {
   late Dio dio;
    // Development Environment
-  //final baseURL = 'https://staging-backend.getrenewabletek.com/api/v1';
+  //final baseURL = 'https://api.openweathermap.org/';
 
   // Production Environment
-  final baseURL = 'https://production.getrenewabletek.com/api/v1';
+  final baseURL = 'https://api.openweathermap.org/';
 
   final Ref read;
 

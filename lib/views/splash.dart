@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:weather/style/appColors.dart';
 import 'package:weather/utils/images.dart';
@@ -48,10 +49,14 @@ class _SplashViewState extends ConsumerState<SplashView>
   Widget build(BuildContext context) {
     //bool _visible = true;
 
-    return const Scaffold(
+    return Scaffold(
         backgroundColor: AppColors.themeGreen,
         body: Center(
-          child: ImageWidget(asset: splashLogoIcon),
+          child: ImageWidget(
+            asset: splashLogoIcon,
+            height: 100.w,
+            width: 100.w,
+          ),
         ));
   }
 }
