@@ -3,7 +3,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:weather/model/city_data_model.dart';
+import 'package:weather/model/weather_response_model.dart';
+import 'package:weather/providers/weather_data_provider.dart';
+import 'package:weather/repository/weather_base_repo.dart';
+import 'package:weather/repository/weather_repository.dart';
 import 'package:weather/utils/logger.dart';
+import 'package:weather/utils/notify_me.dart';
+import 'package:weather/utils/secrets.dart';
 import 'package:weather/viewmodel/base_vm.dart';
 //import 'package:get_storage/get_storage.dart';
 
@@ -12,7 +18,10 @@ class WeatherDataViewModel extends BaseViewModel {
   // ignore: overridden_fields
   final Ref ref;
 
+  WeatherRepository? _weatherRepository;
+
   WeatherDataViewModel(this.ref) : super(ref) {
+    _weatherRepository = ref.read(weatherRepositoryProvider);
     pullAllStoredCityList();
   }
 
@@ -72,8 +81,9 @@ class WeatherDataViewModel extends BaseViewModel {
     AppLogger.logg("Local data $storedCityList");
   }
 
-  void selectCity({required CityDataModel city}) {
+  Future<void> selectCity({required CityDataModel city}) async {
     selectedCity = city;
+    await getCityWeatherData(city: city.name);
     notifyListeners();
   }
 
@@ -122,5 +132,24 @@ class WeatherDataViewModel extends BaseViewModel {
           storedCityList.firstWhere((element) => element.name == "Lagos");
       notifyListeners();
     } else {}
+  }
+
+  bool isLoadingWeather = false;
+  Future getCityWeatherData({
+    required String city,
+  }) async {
+    isLoadingWeather = true;
+    notifyListeners();
+    final res = await _weatherRepository?.getCityWeatherData(
+        city: city, units: "metric", appId: Secrets.wAPIKEY);
+    if (res != null) {
+      AppLogger.logg("response $res");
+      isLoadingWeather = false;
+      notifyListeners();
+    } else {
+      NotifyMe.showAlert("error");
+      isLoadingWeather = false;
+      notifyListeners();
+    }
   }
 }

@@ -6,14 +6,13 @@ import 'package:weather/http/custom_exception.dart';
 import 'package:weather/http/formatted_response.dart';
 import 'package:weather/http/network.dart' as networkutils;
 
-
 abstract class ApiManager {
   late Dio dio;
-   // Development Environment
-  //final baseURL = 'https://api.openweathermap.org/';
+  // Development Environment
+  //final baseURL = 'https://api.openweathermap.org';
 
   // Production Environment
-  final baseURL = 'https://api.openweathermap.org/';
+  final baseURL = 'https://api.openweathermap.org';
 
   final Ref read;
 
@@ -37,6 +36,7 @@ abstract class ApiManager {
     params?.removeWhere((key, value) => value == null);
     final fullRoute = '$baseURL$route';
     AppLogger.logg(fullRoute);
+    // AppLogger.logg("params $params");
     return makeRequest(dio.get(
       fullRoute,
       queryParameters: params,
@@ -53,7 +53,7 @@ abstract class ApiManager {
     params?.removeWhere((key, value) => value == null);
     //body?.removeWhere((key, value) => value == null);
     final fullRoute = '$baseURL$route';
-   AppLogger.logg(fullRoute);
+    AppLogger.logg(fullRoute);
     if (formdata) {
       body = FormData.fromMap(body as Map<String, dynamic>);
     }
@@ -127,9 +127,10 @@ abstract class ApiManager {
       }
     } on DioException catch (e) {
       if (kDebugMode) {
-       AppLogger.logg('HTTP SERVICE ERROR URL: ${e.response?.requestOptions.path}');
-       AppLogger.logg('HTTP SERVICE ERROR MESSAGE: ${e.message}');
-       AppLogger.logg('HTTP SERVICE ERROR DATA: ${e.response?.data}');
+        AppLogger.logg(
+            'HTTP SERVICE ERROR URL: ${e.response?.requestOptions.path}');
+        AppLogger.logg('HTTP SERVICE ERROR MESSAGE: ${e.message}');
+        AppLogger.logg('HTTP SERVICE ERROR DATA: ${e.response?.data}');
       }
       if (e.type == DioExceptionType.connectionTimeout ||
           e.type == DioExceptionType.receiveTimeout ||
