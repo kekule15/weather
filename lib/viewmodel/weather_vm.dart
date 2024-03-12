@@ -68,6 +68,7 @@ class WeatherDataViewModel extends BaseViewModel {
       isfetchLocalData = false;
       notifyListeners();
     }
+    fallBackToDefault();
     AppLogger.logg("Local data $storedCityList");
   }
 
@@ -111,5 +112,15 @@ class WeatherDataViewModel extends BaseViewModel {
 
     await box.put(hiveKeyId, list);
     await pullAllStoredCityList();
+  }
+
+  void fallBackToDefault() {
+    if (selectedCity.name == "Lagos") {
+      //already in Lagos
+    } else {
+      selectedCity =
+          storedCityList.firstWhere((element) => element.name == "Lagos");
+      notifyListeners();
+    }
   }
 }
