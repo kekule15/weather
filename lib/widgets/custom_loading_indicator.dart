@@ -1,8 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:weather/utils/constvalues.dart';
+import 'package:weather/utils/images.dart';
 import 'package:weather/widgets/image_widgets.dart';
 
 class CustomLogoLoadingIndicator extends StatelessWidget {
@@ -17,8 +17,8 @@ class CustomLogoLoadingIndicator extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: padding),
       child: SpinKitPumpingHeart(
         size: 200,
-        itemBuilder: (context, index) =>  ImageWidget(
-          asset: "",
+        itemBuilder: (context, index) => ImageWidget(
+          asset: splashLogoIcon,
           width: 50.w,
           height: 50.w,
         ),

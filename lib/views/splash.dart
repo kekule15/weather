@@ -1,8 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:weather/style/appColors.dart';
 import 'package:weather/utils/images.dart';
+import 'package:weather/utils/router.dart';
 import 'package:weather/widgets/image_widgets.dart';
 
 class SplashView extends ConsumerStatefulWidget {
@@ -21,8 +22,7 @@ class _SplashViewState extends ConsumerState<SplashView>
   Animation? time;
 
   @override
-  void initState() {
-   
+  void didChangeDependencies() {
     _controller =
         AnimationController(vsync: this, duration: const Duration(seconds: 2));
     time = Tween(begin: 0.0, end: 20.0).animate(CurvedAnimation(
@@ -30,13 +30,12 @@ class _SplashViewState extends ConsumerState<SplashView>
         curve: const Interval(0.0, 1.0, curve: Curves.easeOut))
       ..addStatusListener((AnimationStatus status) {
         if (status == AnimationStatus.completed) {
-          // Get.to(() =>
-          //     user == null ? const StepperScreen() : const HomeNavigation());
+          context.push(AppRouter.homeRoute);
         }
       }));
 
     _controller.forward();
-    super.initState();
+    super.didChangeDependencies();
   }
 
   @override
@@ -50,9 +49,9 @@ class _SplashViewState extends ConsumerState<SplashView>
     //bool _visible = true;
 
     return const Scaffold(
-      backgroundColor: AppColors.themeGreen,
+        backgroundColor: AppColors.themeGreen,
         body: Center(
-      child: ImageWidget(asset: splashLogoIcon),
-    ));
+          child: ImageWidget(asset: splashLogoIcon),
+        ));
   }
 }

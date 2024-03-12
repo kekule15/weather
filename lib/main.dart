@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -58,9 +57,7 @@ class MyApp extends ConsumerWidget {
 
                 debugShowCheckedModeBanner: false,
                 title: 'Weather',
-                routerConfig: goRouter,
-
-                //SplashScreen(),
+                routerConfig: AppRouter.router,
               )),
             ));
   }
