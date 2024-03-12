@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:weather/providers/weather_data_provider.dart';
 import 'package:weather/style/appColors.dart';
 import 'package:weather/utils/constvalues.dart';
-import 'package:weather/utils/images.dart';
 import 'package:weather/utils/svgs.dart';
 import 'package:weather/views/city_list.dart';
+import 'package:weather/widgets/city_card_widget.dart';
+import 'package:weather/widgets/city_weather_widget.dart';
 import 'package:weather/widgets/image_widgets.dart';
 import 'package:weather/widgets/single_text_line_widget.dart';
 
@@ -14,6 +16,7 @@ class HomeView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    var viewmodel = ref.watch(weatherDataProvider);
     return Scaffold(
       body: Stack(
         children: [
@@ -30,18 +33,7 @@ class HomeView extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     InkWell(
-                      onTap: () {
-                        showModalBottomSheet(
-                          context: context,
-                          isDismissible: false,
-                          showDragHandle: true,
-                          isScrollControlled: true,
-                          enableDrag: true,
-                          builder: (BuildContext context) {
-                            return const CityListView();
-                          },
-                        );
-                      },
+                      onTap: () {},
                       child: Icon(
                         Icons.menu,
                         size: 20.w,
@@ -62,64 +54,82 @@ class HomeView extends ConsumerWidget {
               SizedBox(
                 height: 25.h,
               ),
-              Container(
-                height: 140.h,
-                width: MediaQuery.sizeOf(context).width / 1.2,
-                margin: const EdgeInsets.only(left: generalHorizontalPadding),
-                decoration: BoxDecoration(
-                  color: AppColors.themeGreen,
-                  borderRadius: BorderRadius.circular(10.r),
-                ),
-                child: Padding(
-                  padding: EdgeInsets.all(20.w),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              Row(
+                children: [
+                  Row(
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SingleTextLineWidget(
-                            text: "Lagos",
-                            size: 15.sp,
-                            weight: FontWeight.bold,
-                            color: AppColors.white,
-                          ),
-                          SizedBox(
-                            height: 6.h,
-                          ),
-                          SingleTextLineWidget(
-                            text: "Tuesday, 12 March 2024",
-                            size: 10.sp,
-                            color: AppColors.white,
-                          ),
-                          SizedBox(
-                            height: 15.h,
-                          ),
-                          SingleTextLineWidget(
-                            text: "24\u00B0",
-                            size: 35.sp,
-                            color: AppColors.white,
-                          ),
-                          SizedBox(
-                            height: 6.h,
-                          ),
-                          SingleTextLineWidget(
-                            text: "Sunny",
-                            size: 10.sp,
-                            color: AppColors.white,
-                          ),
-                        ],
+                      InkWell(
+                        onTap: () {
+                          showModalBottomSheet(
+                            context: context,
+                            isDismissible: false,
+                            showDragHandle: true,
+                            isScrollControlled: true,
+                            enableDrag: true,
+                            builder: (BuildContext context) {
+                              return const CityListView();
+                            },
+                          );
+                        },
+                        child: Container(
+                            height: 35.w,
+                            width: 70.w,
+                            margin: EdgeInsets.only(
+                                left: generalHorizontalPadding, right: 5.w),
+                            decoration: BoxDecoration(
+                                color: AppColors.themeGreen,
+                                borderRadius: BorderRadius.circular(7.r),
+                                border:
+                                    Border.all(color: AppColors.themeGreen)),
+                            child: Padding(
+                              padding: const EdgeInsets.all(2.0),
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.add,
+                                    size: 16.w,
+                                    color: AppColors.white,
+                                  ),
+                                  SingleTextLineWidget(
+                                    text: "Add City",
+                                    size: 10.sp,
+                                    weight: FontWeight.bold,
+                                    color: AppColors.white,
+                                  ),
+                                ],
+                              ),
+                            )),
                       ),
-                      SvgImage(
-                        asset: sunIconSVG,
-                        width: 80.w,
-                        height: 80.w,
-                        color: AppColors.white,
-                      )
                     ],
                   ),
-                ),
+                  Expanded(
+                    child: SizedBox(
+                      height: 30.h,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: List.generate(viewmodel.storedCityList.length,
+                            (index) {
+                          var data = viewmodel.storedCityList[index];
+                          return Padding(
+                            padding:  EdgeInsets.only(left: 15.w),
+                            child: CityWeatherWidget(
+                              onTap: () {
+                                viewmodel.selectCity(city: data);
+                              },
+                              data: data,
+                              selected: viewmodel.selectedCity.name == data.name,
+                            ),
+                          );
+                        }),
+                      ),
+                    ),
+                  ),
+                ],
               ),
+              SizedBox(
+                height: 20.h,
+              ),
+              CityCardWidget(),
               SizedBox(
                 height: 20.h,
               ),
@@ -139,7 +149,7 @@ class HomeView extends ConsumerWidget {
           ),
           Padding(
             padding: EdgeInsets.only(
-                top: 300.h,
+                top: 350.h,
                 left: generalHorizontalPadding,
                 right: generalHorizontalPadding),
             child: ListView(

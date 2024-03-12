@@ -12,11 +12,14 @@ class WeatherDataViewModel extends BaseViewModel {
   // ignore: overridden_fields
   final Ref ref;
 
-  WeatherDataViewModel(this.ref) : super(ref){
+  WeatherDataViewModel(this.ref) : super(ref) {
     //pullAndPushCityList();
   }
 
   var hiveKeyId = "weather";
+
+  CityDataModel selectedCity =
+      CityDataModel(name: "Lagos", lat: 6.4550, long: 3.3841);
 
   List<CityDataModel> storedCityList = [
     CityDataModel(name: "Lagos", lat: 6.4550, long: 3.3841),
@@ -73,5 +76,8 @@ class WeatherDataViewModel extends BaseViewModel {
     AppLogger.logg("Local data $storedCityList");
   }
 
-  
+  void selectCity({required CityDataModel city}) {
+    selectedCity = city;
+    notifyListeners();
+  }
 }

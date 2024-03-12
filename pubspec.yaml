@@ -38,6 +38,7 @@ dependencies:
   path: ^1.8.3
   path_provider:
   pinput: ^4.0.0
+  flutter_carousel_widget: ^2.2.0
 
 dev_dependencies:
   flutter_test:

@@ -21,7 +21,7 @@ class _CityListViewState extends ConsumerState<CityListView> {
   Widget build(BuildContext context) {
     var viewmodel = ref.watch(weatherDataProvider);
 
-    var cityDataList = viewmodel.storedCityList;
+    var cityDataList = viewmodel.cityDataList;
 
     // THE CUSTOME WIDGET THAT DISPLAYS LIST OF PRODUCT EITHER FROM THE SEARCHED DATA OR FROM THE MAIN DATA SOUTCE
     Widget businessTypeListWidget(int index, List<CityDataModel> myList) {

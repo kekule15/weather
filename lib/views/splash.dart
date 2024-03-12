@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:weather/style/appColors.dart';
 import 'package:weather/utils/images.dart';
 import 'package:weather/utils/router.dart';
+import 'package:weather/utils/svgs.dart';
 import 'package:weather/widgets/image_widgets.dart';
 
 class SplashView extends ConsumerStatefulWidget {
@@ -31,7 +32,7 @@ class _SplashViewState extends ConsumerState<SplashView>
         curve: const Interval(0.0, 1.0, curve: Curves.easeOut))
       ..addStatusListener((AnimationStatus status) {
         if (status == AnimationStatus.completed) {
-          context.push(AppRouter.homeRoute);
+          context.pushReplacement(AppRouter.homeRoute);
         }
       }));
 
@@ -52,11 +53,11 @@ class _SplashViewState extends ConsumerState<SplashView>
     return Scaffold(
         backgroundColor: AppColors.themeGreen,
         body: Center(
-          child: ImageWidget(
-            asset: splashLogoIcon,
-            height: 100.w,
-            width: 100.w,
-          ),
-        ));
+            child: SvgImage(
+          asset: sunIconSVG,
+          width: 100.w,
+          height: 100.w,
+          color: AppColors.white,
+        )));
   }
 }
