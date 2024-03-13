@@ -18,7 +18,7 @@ class CityCardWidget extends ConsumerWidget {
     var cityData = viewmodel.list ?? [];
 
     return Container(
-      height: 140.h,
+      height: 145.h,
       width: MediaQuery.sizeOf(context).width,
       margin: const EdgeInsets.symmetric(horizontal: generalHorizontalPadding),
       decoration: BoxDecoration(
