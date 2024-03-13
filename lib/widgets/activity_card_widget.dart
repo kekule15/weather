@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:weather/providers/theme_provider.dart';
 import 'package:weather/style/appColors.dart';
 
+// ignore: must_be_immutable
 class ActivityCardWidget extends ConsumerWidget {
   final String? title;
   final VoidCallback? onTap;

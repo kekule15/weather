@@ -17,15 +17,15 @@ class HomeView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final _scaffoldKey = GlobalKey<ScaffoldState>();
+    final scaffoldKey = GlobalKey<ScaffoldState>();
 
     void openMyDrawer() {
-      _scaffoldKey.currentState!.openDrawer();
+      scaffoldKey.currentState!.openDrawer();
     }
 
     var viewmodel = ref.watch(weatherDataProvider);
     return Scaffold(
-      key: _scaffoldKey,
+      key: scaffoldKey,
       drawer: const MyDrawerPage(),
       body: Stack(
         children: [

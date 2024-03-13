@@ -15,9 +15,8 @@ class CityCardWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     var viewmodel = ref.watch(weatherDataProvider);
-    var cityData = viewmodel.list?.first;
+    var cityData = viewmodel.list ?? [];
 
-   
     return Container(
       height: 140.h,
       width: MediaQuery.sizeOf(context).width,
@@ -58,7 +57,7 @@ class CityCardWidget extends ConsumerWidget {
                       height: 40.w,
                     ),
                   false => SingleTextLineWidget(
-                      text: "${cityData?.temp!.day.toString()}\u00B0",
+                      text: "${cityData.first.temp!.day.toString()}\u00B0",
                       size: 35.sp,
                       color: AppColors.white,
                     ),
@@ -69,7 +68,7 @@ class CityCardWidget extends ConsumerWidget {
                 switch (viewmodel.isLoadingWeather) {
                   true => const TextShimmerWidget(),
                   false => SingleTextLineWidget(
-                      text: "${cityData?.weather![0].main}",
+                      text: "${cityData.first.weather![0].main}",
                       size: 10.sp,
                       color: AppColors.white,
                     ),
@@ -79,7 +78,8 @@ class CityCardWidget extends ConsumerWidget {
             switch (viewmodel.isLoadingWeather) {
               true => const ImageShimmerWidget(),
               false => SvgImage(
-                  asset: AppHelpers.getWeatherImage(group: cityData?.weather![0].id),
+                  asset: AppHelpers.getWeatherImage(
+                      group: cityData.first.weather![0].id),
                   width: 80.w,
                   height: 80.w,
                   color: AppColors.white,

@@ -7,6 +7,7 @@ import 'package:weather/style/appColors.dart';
 import 'package:weather/utils/app_helpers.dart';
 import 'package:weather/widgets/image_widgets.dart';
 import 'package:weather/widgets/single_text_line_widget.dart';
+import 'package:get/get.dart';
 
 class WeekCardWidget extends ConsumerWidget {
   final int? date;
@@ -62,7 +63,7 @@ class WeekCardWidget extends ConsumerWidget {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: SingleTextLineWidget(
-                  text: description.toString(),
+                  text: description.toString().capitalizeFirst!,
                   color: AppColors.white,
                   size: 9.sp,
                   weight: FontWeight.bold,

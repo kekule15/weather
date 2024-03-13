@@ -9,7 +9,6 @@ import 'package:weather/providers/theme_provider.dart';
 import 'package:weather/utils/overlay_service.dart';
 import 'package:weather/utils/router.dart';
 import 'package:weather/utils/temporary_storage.dart';
-import 'package:weather/widgets/loading_overlay_widget.dart';
 import 'package:path_provider/path_provider.dart';
 
 Future<void> main() async {
@@ -30,16 +29,7 @@ class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final themeDataMode = ref.watch(themeDataProvider);
-    ref.listen(loadingState.select((value) => value), (
-      previous,
-      current,
-    ) {
-      if (current) {
-        OverlayService.showOverlay(context);
-      } else {
-        OverlayService.hideOverlay(context);
-      }
-    });
+
     return ScreenUtilInit(
         designSize: const Size(360, 700),
         builder: (widget, child) => AnnotatedRegion<SystemUiOverlayStyle>(
@@ -51,7 +41,7 @@ class MyApp extends ConsumerWidget {
                       ? Brightness.light
                       : Brightness.dark,
                   statusBarColor: Colors.transparent),
-              child: LoadingOverlayWidget(
+
                   child: MaterialApp.router(
                 darkTheme: themeDataMode.isdarkTheme!
                     ? themeDataMode.darkTheme
@@ -63,7 +53,7 @@ class MyApp extends ConsumerWidget {
                 debugShowCheckedModeBanner: false,
                 title: 'Weather',
                 routerConfig: AppRouter.router,
-              )),
+              ),
             ));
   }
 }
