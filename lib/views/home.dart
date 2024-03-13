@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:weather/providers/user_location_provider.dart';
 import 'package:weather/providers/weather_data_provider.dart';
 import 'package:weather/style/appColors.dart';
 import 'package:weather/utils/constvalues.dart';
@@ -25,6 +26,7 @@ class HomeView extends ConsumerWidget {
     }
 
     var viewmodel = ref.watch(weatherDataProvider);
+    var locationViewModel = ref.watch(userLocationViewModelProvider);
     return Scaffold(
       key: scaffoldKey,
       drawer: const MyDrawerPage(),
@@ -201,20 +203,22 @@ class HomeView extends ConsumerWidget {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showModalBottomSheet(
-            backgroundColor: Theme.of(context).dialogBackgroundColor,
-            context: context,
-            isDismissible: true,
-            showDragHandle: false,
-            isScrollControlled: true,
-            enableDrag: false,
-            builder: (BuildContext context) {
-              return const UserCurrentLocationWeatherView();
-            },
-          );
+        onPressed: () async {
+          await locationViewModel.getLocation().then((value) {
+            showModalBottomSheet(
+              backgroundColor: Theme.of(context).dialogBackgroundColor,
+              context: context,
+              isDismissible: true,
+              showDragHandle: false,
+              isScrollControlled: true,
+              enableDrag: false,
+              builder: (BuildContext context) {
+                return const UserCurrentLocationWeatherView();
+              },
+            );
+          });
         },
-        child: Icon(
+        child: const Icon(
           Icons.location_on,
           color: AppColors.white,
         ),

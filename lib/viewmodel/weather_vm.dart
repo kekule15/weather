@@ -21,6 +21,7 @@ class WeatherDataViewModel extends BaseViewModel {
     _weatherRepository = ref.read(weatherRepositoryProvider);
     pullAllStoredCityList();
     getCityWeatherData(city: selectedCity.name);
+   
   }
 
   var hiveKeyId = "weather";
@@ -153,4 +154,6 @@ class WeatherDataViewModel extends BaseViewModel {
       notifyListeners();
     }
   }
+
+ 
 }
