@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:weather/utils/logger.dart';
 import 'package:weather/viewmodel/base_vm.dart';
 
@@ -10,27 +11,46 @@ class UserLocationViewModel extends BaseViewModel {
 
   UserLocationViewModel(this.ref) : super(ref) {
     _determinePosition();
+   // handlePermission();
   }
 
   Position? location;
   LocationPermission? permission;
   Future<Position?> getLocation() async {
     try {
-      if (permission == LocationPermission.denied) {
-        AppLogger.logg("Permission denied");
-        await _determinePosition();
-      } else {
-        AppLogger.logg("Permission Not denied");
-        location = await Geolocator.getCurrentPosition(
-            desiredAccuracy: LocationAccuracy.high);
-        notifyListeners();
-        AppLogger.logg(
-            "Lat ${location?.latitude}  .... long ${location?.longitude}");
-      }
+      location = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
+      notifyListeners();
+      AppLogger.logg(
+          "Lat ${location?.latitude}  .... long ${location?.longitude}");
+
       return location;
     } catch (e) {
       AppLogger.logg("Location error ${e.toString()}");
       return location;
+    }
+  }
+
+  bool isLocationServiceEnabled = false;
+
+  handlePermission() async {
+    var status = await Permission.locationWhenInUse.request();
+    status = await Permission.location.request();
+
+    if (status.isGranted) {
+      AppLogger.logg("grant");
+      isLocationServiceEnabled = true;
+      notifyListeners();
+      await getLocation();
+    } else if (status.isPermanentlyDenied) {
+      AppLogger.logg("perm");
+      openAppSettings();
+    } else if (status.isDenied) {
+      AppLogger.logg("denied");
+      isLocationServiceEnabled = false;
+      notifyListeners();
+      openAppSettings();
+      // _determinePosition();
     }
   }
 
