@@ -7,7 +7,6 @@ import 'package:weather/providers/user_location_provider.dart';
 import 'package:weather/providers/weather_data_provider.dart';
 import 'package:weather/style/appColors.dart';
 import 'package:weather/utils/constvalues.dart';
-import 'package:weather/utils/logger.dart';
 import 'package:weather/views/city_list.dart';
 import 'package:weather/views/drawer.dart';
 import 'package:weather/views/user_current_location_weather.dart';
