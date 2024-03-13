@@ -6,6 +6,7 @@ import 'package:weather/style/appColors.dart';
 import 'package:weather/utils/constvalues.dart';
 import 'package:weather/views/city_list.dart';
 import 'package:weather/views/drawer.dart';
+import 'package:weather/views/user_current_location_weather.dart';
 import 'package:weather/widgets/city_card_widget.dart';
 import 'package:weather/widgets/city_weather_widget.dart';
 import 'package:weather/widgets/shimmer_widget.dart';
@@ -78,7 +79,8 @@ class HomeView extends ConsumerWidget {
                       InkWell(
                         onTap: () {
                           showModalBottomSheet(
-                            backgroundColor: Theme.of(context).dialogBackgroundColor,
+                            backgroundColor:
+                                Theme.of(context).dialogBackgroundColor,
                             context: context,
                             isDismissible: true,
                             showDragHandle: false,
@@ -197,6 +199,25 @@ class HomeView extends ConsumerWidget {
                     }))
           }
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showModalBottomSheet(
+            backgroundColor: Theme.of(context).dialogBackgroundColor,
+            context: context,
+            isDismissible: true,
+            showDragHandle: false,
+            isScrollControlled: true,
+            enableDrag: false,
+            builder: (BuildContext context) {
+              return const UserCurrentLocationWeatherView();
+            },
+          );
+        },
+        child: Icon(
+          Icons.location_on,
+          color: AppColors.white,
+        ),
       ),
     );
   }

@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:weather/style/appColors.dart';
 
 class CustomPopMenuBarWidget extends ConsumerWidget {
  
@@ -16,7 +15,7 @@ class CustomPopMenuBarWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     
     return PopupMenuButton<String>(
-      color: AppColors.white,
+      color: Theme.of(context).cardColor,
       padding: EdgeInsets.zero,
       iconSize: 20.w,
       icon: icon,
