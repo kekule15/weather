@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:weather/providers/user_location_provider.dart';
 import 'package:weather/providers/weather_data_provider.dart';
 import 'package:weather/style/appColors.dart';
 import 'package:weather/utils/constvalues.dart';
@@ -28,7 +27,6 @@ class HomeView extends ConsumerWidget {
     }
 
     var viewmodel = ref.watch(weatherDataProvider);
-    var locationViewModel = ref.watch(userLocationViewModelProvider);
     return Scaffold(
       key: scaffoldKey,
       drawer: const MyDrawerPage(),
@@ -135,7 +133,11 @@ class HomeView extends ConsumerWidget {
                             (index) {
                           var data = viewmodel.storedCityList[index];
                           return Padding(
-                            padding: EdgeInsets.only(left: 15.w),
+                            padding: EdgeInsets.only(
+                                left: 15.w,
+                                right: index == viewmodel.storedCityList.length -1
+                                    ? 20.w
+                                    : 0.w),
                             child: CityWeatherWidget(
                               onTap: () {
                                 viewmodel.selectCity(city: data);
@@ -206,7 +208,7 @@ class HomeView extends ConsumerWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-         // await locationViewModel.getLocation();
+          // await locationViewModel.getLocation();
 
           showModalBottomSheet(
             backgroundColor: Theme.of(context).dialogBackgroundColor,

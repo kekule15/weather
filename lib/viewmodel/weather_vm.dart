@@ -69,6 +69,7 @@ class WeatherDataViewModel extends BaseViewModel {
         serviceBox.value.value.get(hiveKeyId) ?? [];
 
     if (cityDataFromStorage.isEmpty) {
+       await box.put(hiveKeyId, storedCityList);
     } else {
       storedCityList = [];
       cityDataFromStorage = serviceBox.value.value.get(hiveKeyId) ?? [];
@@ -110,6 +111,8 @@ class WeatherDataViewModel extends BaseViewModel {
     var box = await Hive.openBox('app');
     if (name == "Lagos") {
       if (storedCityList.length == 1) {
+        // you can not remove Lagos city
+
         // storedCityList.removeWhere((element) => name == element.name);
         // notifyListeners();
         // AppLogger.logg("remove lagos");
