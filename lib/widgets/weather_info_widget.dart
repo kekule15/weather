@@ -18,30 +18,62 @@ class WeatherInfoWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-     final themeDataMode = ref.watch(themeDataProvider);
-    return ListTile(
-      minLeadingWidth: 0,
-      visualDensity: const VisualDensity(horizontal: -4, vertical: -0),
-      contentPadding: EdgeInsets.zero,
-                        dense: true,
-      leading: SvgImage(
-        asset: image,
-        width: 35.w,
-        height: 35.w,
-        color:switch (themeDataMode.isdarkTheme!) {
-          true => AppColors.white,
-          false => null
-        } 
-      ),
-      title: SingleTextLineWidget(
-        text: value,
-        size: 10.sp,
-        
-      ),
-      subtitle: SingleTextLineWidget(
-        text: title,
-        size: 10.sp,
-      ),
+    final themeDataMode = ref.watch(themeDataProvider);
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        SvgImage(
+            asset: image,
+            width: 35.w,
+            height: 35.w,
+            color: switch (themeDataMode.isdarkTheme!) {
+              true => AppColors.white,
+              false => null
+            }),
+        SizedBox(
+          width: 10.w,
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            SingleTextLineWidget(
+              text: value,
+              size: 10.sp,
+            ),
+            SizedBox(
+              height: 3.h,
+            ),
+            SingleTextLineWidget(
+              text: title,
+              size: 10.sp,
+            ),
+          ],
+        )
+      ],
     );
+    // return ListTile(
+    //   minLeadingWidth: 0,
+    //   visualDensity: const VisualDensity(horizontal: -4, vertical: -0),
+    //   contentPadding: EdgeInsets.zero,
+    //   dense: true,
+    //   leading: SvgImage(
+    //       asset: image,
+    //       width: 35.w,
+    //       height: 35.w,
+    //       color: switch (themeDataMode.isdarkTheme!) {
+    //         true => AppColors.white,
+    //         false => null
+    //       }),
+    //   title: SingleTextLineWidget(
+    //     text: value,
+    //     size: 10.sp,
+    //   ),
+    //   subtitle: SingleTextLineWidget(
+    //     text: title,
+    //     size: 10.sp,
+    //   ),
+    // );
   }
 }

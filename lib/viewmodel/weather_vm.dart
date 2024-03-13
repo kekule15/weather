@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:weather/model/city_data_model.dart';
+import 'package:weather/model/user_location_weather_response_model.dart';
 import 'package:weather/model/weather_response_model.dart';
+import 'package:weather/providers/user_location_provider.dart';
 import 'package:weather/providers/weather_data_provider.dart';
 import 'package:weather/repository/weather_repository.dart';
 import 'package:weather/utils/logger.dart';
@@ -21,7 +23,6 @@ class WeatherDataViewModel extends BaseViewModel {
     _weatherRepository = ref.read(weatherRepositoryProvider);
     pullAllStoredCityList();
     getCityWeatherData(city: selectedCity.name);
-   
   }
 
   var hiveKeyId = "weather";
@@ -155,5 +156,25 @@ class WeatherDataViewModel extends BaseViewModel {
     }
   }
 
- 
+  bool isLoadingCoordinate = false;
+  UserLocationResponseModel? myLocationData;
+  Future getWeatherByCoordinate() async {
+    isLoadingCoordinate = true;
+    notifyListeners();
+    var userLocation = ref.read(userLocationViewModelProvider).location!;
+    final res = await _weatherRepository?.getWeatherByCoordinate(
+        lat: userLocation.latitude,
+        lon: userLocation.longitude,
+        appId: Secrets.wAPIKEY);
+    if (res != null) {
+      //AppLogger.logg("response $res");
+      isLoadingCoordinate = false;
+      myLocationData = res;
+      notifyListeners();
+    } else {
+      NotifyMe.showAlert("error");
+      isLoadingCoordinate = false;
+      notifyListeners();
+    }
+  }
 }

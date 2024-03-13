@@ -204,19 +204,20 @@ class HomeView extends ConsumerWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          await locationViewModel.getLocation().then((value) {
-            showModalBottomSheet(
-              backgroundColor: Theme.of(context).dialogBackgroundColor,
-              context: context,
-              isDismissible: true,
-              showDragHandle: false,
-              isScrollControlled: true,
-              enableDrag: false,
-              builder: (BuildContext context) {
-                return const UserCurrentLocationWeatherView();
-              },
-            );
-          });
+          await locationViewModel.getLocation();
+
+          showModalBottomSheet(
+            backgroundColor: Theme.of(context).dialogBackgroundColor,
+            context: context,
+            isDismissible: true,
+            showDragHandle: false,
+            isScrollControlled: true,
+            enableDrag: false,
+            builder: (BuildContext context) {
+              return const UserCurrentLocationWeatherView();
+            },
+          );
+          await viewmodel.getWeatherByCoordinate();
         },
         child: const Icon(
           Icons.location_on,

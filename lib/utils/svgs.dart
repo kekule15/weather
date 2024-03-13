@@ -13,3 +13,5 @@ const stormIconSVG = 'assets/svgs/storm.svg';
 
 const snowIconSVG = 'assets/svgs/snow.svg';
 
+const temperatureIconSVG = 'assets/svgs/solar_temperature.svg';
+

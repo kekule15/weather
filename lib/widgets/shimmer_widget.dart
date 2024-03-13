@@ -97,3 +97,120 @@ class LoadWeekShimmer extends ConsumerWidget {
         });
   }
 }
+
+class MyLocationMainShimmer extends ConsumerWidget {
+  const MyLocationMainShimmer({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Container(
+      height: 300.h,
+      width: MediaQuery.sizeOf(context).width,
+      decoration: BoxDecoration(
+          color: AppColors.gray.withOpacity(0.4),
+          borderRadius: BorderRadius.circular(10.r)),
+      child: Padding(
+        padding: EdgeInsets.all(15.0.w),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            ImageShimmerWidget(
+              width: 90.w,
+              height: 20.h,
+            ),
+            SizedBox(
+              height: 20.h,
+            ),
+            ImageShimmerWidget(
+              width: 150.w,
+              height: 100.h,
+            ),
+            SizedBox(
+              height: 20.h,
+            ),
+            ImageShimmerWidget(
+              width: 70.w,
+              height: 10.h,
+            ),
+            SizedBox(
+              height: 20.h,
+            ),
+            ImageShimmerWidget(
+              width: 100.w,
+              height: 30.h,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class MyLocationMiniShimmer extends ConsumerWidget {
+  const MyLocationMiniShimmer({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    Widget partD() {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          ImageShimmerWidget(
+            width: 30.w,
+            height: 30.h,
+          ),
+          SizedBox(
+            width: 10.w,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              ImageShimmerWidget(
+                width: 30.w,
+                height: 7.h,
+              ),
+              SizedBox(
+                height: 3.h,
+              ),
+              ImageShimmerWidget(
+                width: 30.w,
+                height: 7.h,
+              ),
+            ],
+          )
+        ],
+      );
+    }
+
+    return Container(
+      height: 150.h,
+      width: MediaQuery.sizeOf(context).width,
+      decoration: BoxDecoration(
+          color: AppColors.gray.withOpacity(0.4),
+          borderRadius: BorderRadius.circular(10.r)),
+      child: Padding(
+        padding: EdgeInsets.all(15.0.w),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [partD(), partD()],
+            ),
+             SizedBox(
+                          height: 20.h,
+                        ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [partD(), partD()],
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
