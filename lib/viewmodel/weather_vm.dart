@@ -161,20 +161,39 @@ class WeatherDataViewModel extends BaseViewModel {
   Future getWeatherByCoordinate() async {
     isLoadingCoordinate = true;
     notifyListeners();
-    var userLocation = ref.read(userLocationViewModelProvider).location!;
-    final res = await _weatherRepository?.getWeatherByCoordinate(
-        lat: userLocation.latitude,
-        lon: userLocation.longitude,
-        appId: Secrets.wAPIKEY);
-    if (res != null) {
-      //AppLogger.logg("response $res");
-      isLoadingCoordinate = false;
-      myLocationData = res;
-      notifyListeners();
+    var locationViewModel = ref.read(userLocationViewModelProvider);
+    var userLocation = locationViewModel.location;
+    if (userLocation == null) {
+      var locationdata = await locationViewModel.getLocation();
+      final res = await _weatherRepository?.getWeatherByCoordinate(
+          lat: locationdata!.latitude,
+          lon: locationdata.longitude,
+          appId: Secrets.wAPIKEY);
+      if (res != null) {
+        //AppLogger.logg("response $res");
+        isLoadingCoordinate = false;
+        myLocationData = res;
+        notifyListeners();
+      } else {
+        NotifyMe.showAlert("error");
+        isLoadingCoordinate = false;
+        notifyListeners();
+      }
     } else {
-      NotifyMe.showAlert("error");
-      isLoadingCoordinate = false;
-      notifyListeners();
+      final res = await _weatherRepository?.getWeatherByCoordinate(
+          lat: userLocation.latitude,
+          lon: userLocation.longitude,
+          appId: Secrets.wAPIKEY);
+      if (res != null) {
+        //AppLogger.logg("response $res");
+        isLoadingCoordinate = false;
+        myLocationData = res;
+        notifyListeners();
+      } else {
+        NotifyMe.showAlert("error");
+        isLoadingCoordinate = false;
+        notifyListeners();
+      }
     }
   }
 }

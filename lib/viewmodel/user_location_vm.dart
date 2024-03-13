@@ -14,7 +14,7 @@ class UserLocationViewModel extends BaseViewModel {
 
   Position? location;
   LocationPermission? permission;
- Future getLocation() async {
+  Future<Position?> getLocation() async {
     try {
       if (permission == LocationPermission.denied) {
         AppLogger.logg("Permission denied");
@@ -27,8 +27,10 @@ class UserLocationViewModel extends BaseViewModel {
         AppLogger.logg(
             "Lat ${location?.latitude}  .... long ${location?.longitude}");
       }
+      return location;
     } catch (e) {
       AppLogger.logg("Location error ${e.toString()}");
+      return location;
     }
   }
 
